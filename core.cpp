@@ -6,8 +6,11 @@ int main()
 	try
 	{
 		srand(time(0));
-		int num = 10;
+		
+		int num = 10;// Размер очереди
+		
 		task_queue tasks(num);
+		
 		task a(1, 10);
 		task b(2, 5);
 		task c(3, 7);
@@ -31,7 +34,7 @@ int main()
 		//tasks.Push(j);
 		//tasks.Show();
 
-		int size = 9;
+		int size = 9;//Количество ядер
 
 		if (size > num) size = num - 1;
 
@@ -39,26 +42,26 @@ int main()
 		
 		int k = 0;
 		
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++)//В каждое ядро по одной задаче
 		{
 			if (tasks.Is_Empty()) break;
 			p[i] = tasks.Pop();
 			//std::cout << "Core " << i << " | " << p[i].GetID() << " | " << p[i].GetTime() << "\n";
 		}
 
-		while (k != size)
+		while (k != size)//Пока все ядра не станут пустыми
 		{
 			for (int i = 0; i < size; i++)
 			{
-				if (p[i].GetTime() != 0)
+				if (p[i].GetTime() != 0)// Если ядро не пустое
 				{
-					p[i].Minus();
+					p[i].Minus();//ID--
 					//p[i].Show();
 
-					if (p[i].GetTime() == 0)
+					if (p[i].GetTime() == 0) //Если задача выполнена
 					{
 						std::cout << "| Core - " << i << " | ID - " << p[i].GetID() << " | Time - " << p[i].Get_Stime() << " \n";
-						/*int r = rand() % 10;
+						/*int r = rand() % 10;// Рандомное число
 						if ((r >= 5) && (r <= 8))
 						{
 							if (!tasks.Is_Full())
@@ -89,7 +92,7 @@ int main()
 								}
 							}
 						}*/
-						if (tasks.Is_Empty())
+						if (tasks.Is_Empty())//Если очередь не пуста, то закидываем задачу в пустое ядро
 						{
 							k++;
 						}
